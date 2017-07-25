@@ -2,6 +2,13 @@ package io.spring.initializr;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jcraft.jsch.Session;
+import io.spring.initializr.vcs.config.VcsServiceAutoConfiguration;
+import org.eclipse.jgit.transport.CredentialsProvider;
+import org.eclipse.jgit.transport.JschConfigSessionFactory;
+import org.eclipse.jgit.transport.OpenSshConfig;
+import org.eclipse.jgit.transport.SshSessionFactory;
+import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -9,6 +16,7 @@ import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.scheduling.annotation.AsyncConfigurerSupport;
@@ -28,7 +36,16 @@ import java.util.concurrent.Executor;
 @SpringBootApplication
 @ComponentScan({"io.spring.initializr.controller"})
 @EnableScheduling
+@Import(VcsServiceAutoConfiguration.class)
 public class InitializrApp {
+
+    static {
+        SshSessionFactory.setInstance(new JschConfigSessionFactory() {
+            protected void configure(OpenSshConfig.Host hc, Session session) {
+                session.setConfig("StrictHostKeyChecking", "no");
+            }
+        });
+    }
 
     public static void main(String[] args) {
         SpringApplication.run(InitializrApp.class, args);
@@ -39,6 +56,11 @@ public class InitializrApp {
 
     @Value("${github.password}")
     String githubPassword;
+
+    @Bean
+    CredentialsProvider githubCredentialsProvider() {
+        return new UsernamePasswordCredentialsProvider(githubPassword,"");
+    }
 
     @Bean
     RestTemplate githubRestTemplate(RestTemplateBuilder builder) {
