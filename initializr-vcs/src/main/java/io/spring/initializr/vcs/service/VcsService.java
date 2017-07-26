@@ -14,7 +14,6 @@ import org.springframework.web.client.RestTemplate;
 import java.io.File;
 import java.io.IOException;
 
-@Slf4j
 public interface VcsService {
 
     Logger LOGGER = LoggerFactory.getLogger(VcsService.class);
