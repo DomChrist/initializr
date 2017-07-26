@@ -1,15 +1,11 @@
 package io.spring.initializr.vcs.service.github
 
-import com.jcraft.jsch.Session
 import groovy.util.logging.Slf4j
 import io.spring.initializr.generator.BasicProjectRequest
 import io.spring.initializr.vcs.data.CreateRepoRequest
 import io.spring.initializr.vcs.data.github.CreateRepoResponse
 import io.spring.initializr.vcs.service.VcsService
 import org.eclipse.jgit.transport.CredentialsProvider
-import org.eclipse.jgit.transport.JschConfigSessionFactory
-import org.eclipse.jgit.transport.OpenSshConfig
-import org.eclipse.jgit.transport.SshSessionFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.web.client.RestTemplate
