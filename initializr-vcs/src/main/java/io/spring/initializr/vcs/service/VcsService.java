@@ -1,6 +1,5 @@
 package io.spring.initializr.vcs.service;
 
-import groovy.util.logging.Slf4j;
 import io.spring.initializr.generator.BasicProjectRequest;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
