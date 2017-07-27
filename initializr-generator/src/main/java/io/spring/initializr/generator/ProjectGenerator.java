@@ -26,7 +26,7 @@ import io.spring.initializr.metadata.MetadataElement;
 import io.spring.initializr.util.TemplateRenderer;
 import io.spring.initializr.util.Version;
 import io.spring.initializr.util.VersionProperty;
-import io.spring.initializr.vcs.service.VcsService;
+import io.spring.initializr.vcs.service.github.GithubVcsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanWrapperImpl;
@@ -94,7 +94,7 @@ public class ProjectGenerator {
 	private ProjectResourceLocator projectResourceLocator = new ProjectResourceLocator();
 
     @Autowired(required = false)
-    private VcsService vcsService;
+    private GithubVcsService githubVcsService;
 
 
     @Value("${TMPDIR:.}/initializr")
@@ -259,7 +259,7 @@ public class ProjectGenerator {
 		}
 		publishProjectGeneratedEvent(request);
         if(request.isInitGit()){
-            vcsService.createRepo(dir, request);
+            githubVcsService.createRepo(dir, request);
         }
 		return rootDir;
 

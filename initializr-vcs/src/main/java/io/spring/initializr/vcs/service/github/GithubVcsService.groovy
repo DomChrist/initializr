@@ -8,11 +8,13 @@ import io.spring.initializr.vcs.service.VcsService
 import org.eclipse.jgit.transport.CredentialsProvider
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.stereotype.Service
 import org.springframework.web.client.RestTemplate
 
 import java.util.concurrent.Executors
 
 @Slf4j
+@Service
 class GithubVcsService implements VcsService {
 
     @Autowired(required = false)
