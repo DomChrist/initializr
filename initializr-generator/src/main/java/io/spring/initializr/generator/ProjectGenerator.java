@@ -94,7 +94,7 @@ public class ProjectGenerator {
 	private ProjectResourceLocator projectResourceLocator = new ProjectResourceLocator();
 
     @Autowired(required = false)
-    private VcsService vcsService;
+    private VcsService githubVcsService;
 
 
     @Value("${TMPDIR:.}/initializr")
@@ -259,7 +259,7 @@ public class ProjectGenerator {
 		}
 		publishProjectGeneratedEvent(request);
         if(request.isInitGit()){
-            vcsService.createRepo(dir, request);
+            githubVcsService.createRepo(dir, request);
         }
 		return rootDir;
 
